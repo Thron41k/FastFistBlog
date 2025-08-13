@@ -1,0 +1,24 @@
+﻿@model FastFistBlog.Server.Controllers.DTO.CommentEditVm
+@{
+    ViewData["Title"] = "Комментарий";
+}
+<h1 class="mb-3">@ViewData["Title"]</h1>
+
+<dl class="row">
+    <dt class="col-sm-2">Статья</dt>
+    <dd class="col-sm-10">@Model.ArticleTitle</dd>
+
+    <dt class="col-sm-2">Автор</dt>
+    <dd class="col-sm-10">@Model.AuthorDisplayName</dd>
+
+    <dt class="col-sm-2">Создан</dt>
+    <dd class="col-sm-10">@Model.CreatedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</dd>
+
+    <dt class="col-sm-2">Текст</dt>
+    <dd class="col-sm-10"><pre class="mb-0">@Model.Content</pre></dd>
+</dl>
+
+<p>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Редактировать</a>
+    <a asp-action="Index" class="btn btn-secondary">К списку</a>
+</p>

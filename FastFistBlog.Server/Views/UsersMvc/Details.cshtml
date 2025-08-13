@@ -1,0 +1,24 @@
+﻿@model FastFistBlog.Server.Controllers.DTO.UserDetailsVm
+@{
+    ViewData["Title"] = "Информация о пользователе";
+}
+<h1>@Model.UserName</h1>
+
+<dl class="row">
+    <dt class="col-sm-3">Почта</dt>
+    <dd class="col-sm-9">@Model.Email</dd>
+
+    <dt class="col-sm-3">Роли</dt>
+    <dd class="col-sm-9">@string.Join(", ", Model.Roles)</dd>
+
+    <dt class="col-sm-3">Статей</dt>
+    <dd class="col-sm-9">@Model.ArticlesCount</dd>
+
+    <dt class="col-sm-3">Комментариев</dt>
+    <dd class="col-sm-9">@Model.CommentsCount</dd>
+</dl>
+
+<p>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Редактировать</a>
+    <a asp-action="Index" class="btn btn-secondary">Назад к списку</a>
+</p>

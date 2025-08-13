@@ -3,13 +3,25 @@
 	ViewData["Title"] = "Регистрация";
 }
 
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        <ul>
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <li>@error.ErrorMessage</li>
+            }
+        </ul>
+    </div>
+}
+
 <h2>Регистрация</h2>
 
 <form asp-action="Register" method="post">
 	<div class="form-group">
-		<label asp-for="DisplayName"></label>
-		<input asp-for="DisplayName" class="form-control" />
-		<span asp-validation-for="DisplayName" class="text-danger"></span>
+		<label asp-for="UserName">Имя</label>
+		<input asp-for="UserName" class="form-control" />
+		<span asp-validation-for="UserName" class="text-danger"></span>
 	</div>
 
 	<div class="form-group">
@@ -19,7 +31,7 @@
 	</div>
 
 	<div class="form-group">
-		<label asp-for="Password"></label>
+		<label asp-for="Password">Пароль</label>
 		<input asp-for="Password" type="password" class="form-control" />
 		<span asp-validation-for="Password" class="text-danger"></span>
 	</div>

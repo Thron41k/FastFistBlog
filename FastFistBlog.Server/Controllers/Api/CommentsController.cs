@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace FastFistBlog.Server.Controllers;
+namespace FastFistBlog.Server.Controllers.Api;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -25,8 +25,8 @@ public class CommentsController(ApplicationDbContext context, UserManager<Applic
                 c.Id,
                 c.Content,
                 c.CreatedAt,
-                Author = c.Author.DisplayName,
-                ArticleId = c.ArticleId
+                Author = c.Author!.DisplayName,
+                c.ArticleId
             })
             .ToListAsync();
 
@@ -48,7 +48,7 @@ public class CommentsController(ApplicationDbContext context, UserManager<Applic
             comment.Id,
             comment.Content,
             comment.CreatedAt,
-            Author = comment.Author.DisplayName
+            Author = comment.Author!.DisplayName
         });
     }
 

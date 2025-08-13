@@ -2,16 +2,15 @@
 using FastFistBlog.Server.Controllers.DTO;
 using FastFistBlog.Server.Data.Models;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FastFistBlog.Server.Controllers;
+namespace FastFistBlog.Server.Controllers.Api;
 
 [ApiController]
 [Route("api/[controller]")]
-public class UsersController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+public class UsersController(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
     : ControllerBase
 {
     [HttpPost("register")]
@@ -19,9 +18,8 @@ public class UsersController(UserManager<ApplicationUser> userManager, RoleManag
     {
         var user = new ApplicationUser
         {
-            UserName = model.Email,
             Email = model.Email,
-            DisplayName = model.DisplayName
+            UserName = model.UserName
         };
 
         var result = await userManager.CreateAsync(user, model.Password);
@@ -29,18 +27,18 @@ public class UsersController(UserManager<ApplicationUser> userManager, RoleManag
             return BadRequest(result.Errors);
 
         if (!await roleManager.RoleExistsAsync("User"))
-            await roleManager.CreateAsync(new IdentityRole("User"));
+            await roleManager.CreateAsync(new ApplicationRole{Name = "User" });
 
         await userManager.AddToRoleAsync(user, "User");
 
-        return Ok(new { user.Id, user.Email, user.DisplayName });
+        return Ok(new { user.Id, user.Email, user.UserName });
     }
 
     [Authorize(Roles = "Administrator")]
     [HttpGet]
     public IActionResult GetAllUsers()
     {
-        var users = userManager.Users.Select(u => new { u.Id, u.Email, u.DisplayName }).ToList();
+        var users = userManager.Users.Select(u => new { u.Id, u.Email, u.UserName }).ToList();
         return Ok(users);
     }
 
@@ -51,7 +49,7 @@ public class UsersController(UserManager<ApplicationUser> userManager, RoleManag
         var user = await userManager.FindByIdAsync(id);
         if (user == null) return NotFound();
 
-        return Ok(new { user.Id, user.Email, user.DisplayName });
+        return Ok(new { user.Id, user.Email, user.UserName });
     }
 
     [Authorize(Roles = "Administrator")]
@@ -61,7 +59,7 @@ public class UsersController(UserManager<ApplicationUser> userManager, RoleManag
         var user = await userManager.FindByIdAsync(id);
         if (user == null) return NotFound();
 
-        user.DisplayName = model.DisplayName;
+        user.UserName = model.UserName;
         user.Email = model.Email;
         user.UserName = model.Email;
 
@@ -69,7 +67,7 @@ public class UsersController(UserManager<ApplicationUser> userManager, RoleManag
         if (!result.Succeeded)
             return BadRequest(result.Errors);
 
-        return Ok(new { user.Id, user.Email, user.DisplayName });
+        return Ok(new { user.Id, user.Email, user.UserName });
     }
 
     [Authorize(Roles = "Administrator")]

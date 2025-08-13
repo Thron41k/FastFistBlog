@@ -1,0 +1,72 @@
+﻿@model FastFistBlog.Server.Data.Models.Article
+
+@{
+    ViewData["Title"] = "Просмотр статьи";
+}
+
+<h1>@Model.Title</h1>
+<p><em>Автор: @(Model.Author!.UserName)</em></p>
+<p><em>Дата создания: @Model.CreatedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</em></p>
+
+@if (Model.ArticleTags.Any())
+{
+    <p>
+        <strong>Теги:</strong>
+        @foreach (var tag in Model.ArticleTags)
+        {
+            <span class="badge bg-secondary me-1">@tag.Tag!.Name</span>
+        }
+    </p>
+}
+
+<div class="mb-4">
+    @Html.Raw(Model.Content.Replace("\n", "<br/>"))
+</div>
+
+<hr />
+
+<h3>Комментарии</h3>
+
+@if (Model.Comments.Any())
+{
+    <ul class="list-group mb-3">
+        @foreach (var comment in Model.Comments.OrderByDescending(c => c.CreatedAt))
+        {
+            <li class="list-group-item">
+                <strong>@(comment.Author!.UserName)</strong>
+                <span class="text-muted">(@comment.CreatedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm"))</span>
+                <div>@Html.Raw(comment.Content.Replace("\n", "<br/>"))</div>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p class="text-muted">Комментариев пока нет.</p>
+}
+
+@if (User.Identity?.IsAuthenticated ?? false)
+{
+    <h4>Оставить комментарий</h4>
+    <form asp-controller="CommentsMvc" asp-action="Create" method="post">
+        <input type="hidden" name="ArticleId" value="@Model.Id" />
+        <div class="mb-3">
+            <textarea name="Content" class="form-control" rows="3" placeholder="Напишите комментарий..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-success">Отправить</button>
+    </form>
+}
+else
+{
+    <p class="text-muted">Чтобы оставить комментарий, <a asp-controller="AccountMvc" asp-action="Login">войдите</a>.</p>
+}
+
+<hr />
+
+<p>
+    @if (User.Identity?.Name == Model.Author.UserName || User.IsInRole("Administrator") || User.IsInRole("Moderator"))
+    {
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Редактировать</a>
+    }
+    <a asp-action="Index" class="btn btn-secondary">Назад к списку</a>
+</p>

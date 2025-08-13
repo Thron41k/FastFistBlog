@@ -6,6 +6,7 @@
     <title>@ViewData["Title"] - Мой первый блог</title>
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/FastFistBlog.Server.styles.css" asp-append-version="true" />
 </head>
@@ -19,21 +20,35 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Комментарии</a>
-                        </li>
-                        <li class="nav-item">
-	                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Теги</a>
-                        </li>
-                        <li class="nav-item">
-	                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Пользователи</a>
-                        </li>
-                        <li class="nav-item">
-	                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Роли</a>
-                        </li>
-                    </ul>
-                    <partial name="_LoginPartial" />
+                    @if (User.Identity is { IsAuthenticated: true })
+                    {
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="ArticlesMvc" asp-action="Index">Статьи</a>
+                            </li>
+                            @if (User.IsInRole("Administrator") || User.IsInRole("Moderator"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="CommentsMvc" asp-action="Index">Комментарии</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="TagsMvc" asp-action="Index">Теги</a>
+                                </li>
+                            }
+                            @if (User.IsInRole("Administrator"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="UsersMvc" asp-action="Index">Пользователи</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="RolesMvc" asp-action="Index">Роли</a>
+                                </li>
+                            }
+                        </ul>
+                    }
+                    <div class="d-flex ms-auto">
+                        <partial name="_LoginPartial" />
+                    </div>
                 </div>
             </div>
         </nav>
@@ -46,11 +61,14 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2025 - FastFistBlog by Thron41k
+            &copy; 2025 - FastFistBlog by <a class="text-dark" href="https://github.com/Thron41k">Thron41k </a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace FastFistBlog.Server.Controllers;
+namespace FastFistBlog.Server.Controllers.Api;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -24,7 +24,7 @@ public class ArticlesController(ApplicationDbContext context, UserManager<Applic
                 a.Id,
                 a.Title,
                 a.CreatedAt,
-                Author = a.Author.DisplayName
+                Author = a.Author!.DisplayName
             })
             .ToListAsync();
 
@@ -43,7 +43,7 @@ public class ArticlesController(ApplicationDbContext context, UserManager<Applic
                 a.Id,
                 a.Title,
                 a.CreatedAt,
-                Author = a.Author.DisplayName
+                Author = a.Author!.DisplayName
             })
             .ToListAsync();
 

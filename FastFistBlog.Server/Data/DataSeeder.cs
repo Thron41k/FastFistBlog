@@ -9,15 +9,28 @@ public static class DataSeeder
     {
         using var scope = services.CreateScope();
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
 
         string[] roles = ["Administrator", "Moderator", "User"];
+
+        var roleDescriptions = new Dictionary<string, string>
+        {
+            { "Administrator", "Полные права на управление системой" },
+            { "Moderator", "Может модерировать контент" },
+            { "User", "Обычный пользователь с доступом к базовым функциям" }
+        };
 
         foreach (var role in roles)
         {
             if (!await roleManager.RoleExistsAsync(role))
             {
-                await roleManager.CreateAsync(new IdentityRole(role));
+                var newRole = new ApplicationRole
+                {
+                    Name = role,
+                    Description = roleDescriptions[role]
+                };
+
+                await roleManager.CreateAsync(newRole);
             }
         }
 

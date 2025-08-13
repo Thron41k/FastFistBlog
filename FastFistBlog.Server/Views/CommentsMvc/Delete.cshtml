@@ -1,0 +1,27 @@
+﻿@model FastFistBlog.Server.Controllers.DTO.CommentEditVm
+@{
+    ViewData["Title"] = "Удаление комментария";
+}
+<h1 class="mb-3">@ViewData["Title"]</h1>
+
+<div class="card">
+    <div class="card-body">
+        <p>
+            Вы действительно хотите удалить комментарий к статье
+            <strong>@Model.ArticleTitle</strong> от пользователя
+            <strong>@Model.AuthorDisplayName</strong>?
+        </p>
+        <blockquote class="blockquote">
+            @Model.Content
+        </blockquote>
+        <footer class="blockquote-footer">
+            @Model.CreatedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")
+        </footer>
+    </div>
+</div>
+
+<form asp-action="Delete" method="post" class="mt-3">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Удалить</button>
+    <a asp-action="Index" class="btn btn-secondary">Отмена</a>
+</form>

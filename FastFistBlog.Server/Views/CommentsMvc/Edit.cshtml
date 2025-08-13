@@ -1,0 +1,27 @@
+﻿@model FastFistBlog.Server.Controllers.DTO.CommentEditVm
+@{
+    ViewData["Title"] = "Редактирование комментария";
+}
+<h1 class="mb-3">@ViewData["Title"]</h1>
+
+<div class="mb-3">
+    <div><strong>Статья:</strong> @Model.ArticleTitle</div>
+    <div><strong>Автор:</strong> @Model.AuthorDisplayName</div>
+    <div><strong>Создан:</strong> @Model.CreatedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</div>
+</div>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+    <div class="mb-3">
+        <label asp-for="Content" class="form-label">Текст комментария</label>
+        <textarea asp-for="Content" class="form-control" rows="6"></textarea>
+        <span asp-validation-for="Content" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+    <a asp-action="Index" class="btn btn-secondary">Отмена</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,7 +1,6 @@
 ﻿@using FastFistBlog.Server.Data.Models
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager
 
 <ul class="navbar-nav">
 	@if (SignInManager.IsSignedIn(User))
@@ -10,18 +9,19 @@
 			<a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Привет @User.Identity?.Name!</a>
 		</li>
 		<li class="nav-item">
-			<form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-				<button type="submit" class="nav-link btn btn-link text-dark">Выход</button>
-			</form>
+            <form class="form-inline" asp-controller="AccountMvc" asp-action="Logout" asp-route-returnUrl="@Url.Action("Index", "Home")" method="post">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="nav-link btn btn-link text-dark">Выход</button>
+            </form>
 		</li>
 	}
 	else
 	{
 		<li class="nav-item">
-			<a class="nav-link text-dark" asp-controller="Account" asp-action="Register">Регистрация</a>
+			<a class="nav-link text-dark" asp-controller="AccountMvc" asp-action="Register">Регистрация</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Вход</a>
+			<a class="nav-link text-dark" asp-controller="AccountMvc" asp-action="Login">Вход</a>
 		</li>
 	}
 </ul>

@@ -21,6 +21,10 @@ namespace FastFistBlog.Server.Data
                 .HasIndex(t => t.Name)
                 .IsUnique();
 
+            builder.Entity<ApplicationRole>()
+                .Property(r => r.Description)
+                .HasMaxLength(2000);
+
             builder.Entity<Article>()
                 .HasOne(a => a.Author)
                 .WithMany(u => u.Articles)

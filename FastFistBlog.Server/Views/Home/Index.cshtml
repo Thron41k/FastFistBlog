@@ -1,8 +1,27 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Главная";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Все статьи</h1>
-    <p><a href="https://learn.microsoft.com/aspnet/core">Добавить статью</a></p>
+    <h1 class="display-4">Добро пожаловать в FastFist Blog</h1>
+    <p class="lead">
+        Здесь мы делимся опытом, свежими идеями и готовыми решениями для разработчиков.
+        От первых строк кода до масштабных проектов — всё, что вдохновляет и помогает расти в профессии.
+    </p>
+    <hr />
+    @if (User.Identity!.IsAuthenticated)
+    {
+        <a asp-controller="ArticlesMvc" asp-action="Create" class="btn btn-primary btn-lg">
+            ✍ Добавить статью
+        </a>
+    }
+    else
+    {
+        <a asp-controller="AccountMvc" asp-action="Register" class="btn btn-success btn-lg me-2">
+            Регистрация
+        </a>
+        <a asp-controller="AccountMvc" asp-action="Login" class="btn btn-primary btn-lg">
+            Вход
+        </a>
+    }
 </div>

@@ -1,0 +1,78 @@
+﻿@model List<FastFistBlog.Server.Controllers.DTO.CommentGroupVm>
+@{
+    ViewData["Title"] = "Комментарии по статьям";
+}
+
+<h1 class="mb-3">@ViewData["Title"]</h1>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">Комментариев пока нет.</div>
+}
+else
+{
+    <div class="accordion" id="commentsAccordion">
+        @foreach (var group in Model)
+        {
+            var collapseId = $"collapse_{group.ArticleId}";
+            var headingId = $"heading_{group.ArticleId}";
+            <div class="accordion-item mb-2">
+                <h2 class="accordion-header" id="@headingId">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#@collapseId" aria-expanded="false" aria-controls="@collapseId">
+                        Статья: @group.ArticleTitle
+                        <span class="badge bg-secondary ms-2">@group.Comments.Count</span>
+                    </button>
+                </h2>
+                <div id="@collapseId" class="accordion-collapse collapse" aria-labelledby="@headingId" data-bs-parent="#commentsAccordion">
+                    <div class="accordion-body">
+                        @if (!group.Comments.Any())
+                        {
+                            <div class="text-muted">Комментариев нет.</div>
+                        }
+                        else
+                        {
+                            <div class="table-responsive">
+                                <table class="table table-sm table-striped align-middle">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th style="width: 40%">Текст</th>
+                                            <th>Автор</th>
+                                            <th>Создан</th>
+                                            <th style="width: 160px"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var c in group.Comments)
+                                        {
+                                            <tr>
+                                                <td class="text-truncate" style="max-width: 600px">@c.Content</td>
+                                                <td>@c.AuthorDisplayName</td>
+                                                <td>@c.CreatedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</td>
+                                                <td class="text-end">
+                                                    <div class="btn-group" role="group">
+                                                        <a asp-action="Details" asp-route-id="@c.Id" class="btn btn-sm btn-outline-secondary">Детали</a>
+                                                        <a asp-action="Edit" asp-route-id="@c.Id" class="btn btn-sm btn-primary">Редактировать</a>
+                                                        <a asp-action="Delete" asp-route-id="@c.Id" class="btn btn-sm btn-danger">Удалить</a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

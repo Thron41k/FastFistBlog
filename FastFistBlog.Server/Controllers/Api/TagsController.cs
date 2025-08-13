@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace FastFistBlog.Server.Controllers;
+namespace FastFistBlog.Server.Controllers.Api;
 
 [ApiController]
 [Route("api/[controller]")]
