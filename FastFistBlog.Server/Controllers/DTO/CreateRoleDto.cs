@@ -4,7 +4,7 @@ namespace FastFistBlog.Server.Controllers.DTO;
 
 public class CreateRoleDto
 {
-    [Required]
+    [Required(ErrorMessage = "Название роли не может быть пустым")]
     [Display(Name = "Название роли")]
     [StringLength(256, MinimumLength = 2)]
     public string Name { get; set; } = string.Empty;

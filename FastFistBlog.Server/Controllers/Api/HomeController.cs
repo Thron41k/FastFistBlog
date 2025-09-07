@@ -1,6 +1,8 @@
-using System.Diagnostics;
 using FastFistBlog.Server.Models;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
+using System.Security.Claims;
 
 namespace FastFistBlog.Server.Controllers.Api;
 
@@ -11,14 +13,17 @@ public class HomeController(ILogger<HomeController> logger) : Controller
         return View();
     }
 
-    public IActionResult Privacy()
-    {
-        return View();
-    }
-
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    [Route("Home/Error")]
     public IActionResult Error()
     {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        var exceptionHandlerPathFeature = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
+
+        if (exceptionHandlerPathFeature?.Error is { } ex)
+        {
+            var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "anonymous";
+            logger.LogError(userId, "UnhandledException", ex, $"Path={exceptionHandlerPathFeature.Path}");
+        }
+
+        return View("Error");
     }
 }

@@ -16,6 +16,11 @@ public class UsersController(UserManager<ApplicationUser> userManager, RoleManag
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterUserDto model)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+        var existingUser = await userManager.FindByEmailAsync(model.Email);
+        if (existingUser is not null)
+            return Conflict(new { Message = "Пользователь с таким Email уже существует" });
         var user = new ApplicationUser
         {
             Email = model.Email,
