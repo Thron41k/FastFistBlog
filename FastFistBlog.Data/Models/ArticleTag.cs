@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FastFistBlog.Server.Data.Models;
+namespace FastFistBlog.Data.Models;
 
 public class ArticleTag
 {

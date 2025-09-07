@@ -1,5 +1,5 @@
-﻿using FastFistBlog.Server.Controllers.DTO;
-using FastFistBlog.Server.Data.Models;
+﻿using FastFistBlog.Data.Models;
+using FastFistBlog.Server.Controllers.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

@@ -1,0 +1,113 @@
+﻿@host = http://localhost:5210
+
+############################################################
+# Articles
+############################################################
+
+### Получить все статьи
+GET {{host}}/api/articles
+Accept: application/json
+
+### Получить статью по Id
+GET {{host}}/api/articles/1
+Accept: application/json
+
+### Создать статью
+POST {{host}}/api/articles
+Content-Type: application/json
+Accept: application/json
+
+{
+  "title": "Первая статья",
+  "content": "Это содержимое моей первой статьи",
+  "authorId": "user123"
+}
+
+### Обновить статью
+PUT {{host}}/api/articles/1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "id": 1,
+  "title": "Обновлённый заголовок",
+  "content": "Обновлённое содержимое",
+  "authorId": "user123"
+}
+
+### Удалить статью
+DELETE {{host}}/api/articles/1
+
+
+############################################################
+# Tags
+############################################################
+
+### Получить все теги
+GET {{host}}/api/tags
+Accept: application/json
+
+### Получить тег по Id
+GET {{host}}/api/tags/1
+Accept: application/json
+
+### Создать тег
+POST {{host}}/api/tags
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "ASP.NET Core"
+}
+
+### Обновить тег
+PUT {{host}}/api/tags/1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "id": 1,
+  "name": "Entity Framework Core"
+}
+
+### Удалить тег
+DELETE {{host}}/api/tags/1
+
+
+############################################################
+# Comments
+############################################################
+
+### Получить комментарии к статье
+GET {{host}}/api/comments/article/1
+Accept: application/json
+
+### Получить комментарий по Id
+GET {{host}}/api/comments/1
+Accept: application/json
+
+### Создать комментарий
+POST {{host}}/api/comments
+Content-Type: application/json
+Accept: application/json
+
+{
+  "content": "Очень полезная статья!",
+  "articleId": 1,
+  "authorId": "user123"
+}
+
+### Обновить комментарий
+PUT {{host}}/api/comments/1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "id": 1,
+  "content": "Я нашёл небольшую ошибку в статье",
+  "articleId": 1,
+  "authorId": "user123"
+}
+
+### Удалить комментарий
+DELETE {{host}}/api/comments/1

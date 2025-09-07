@@ -1,7 +1,7 @@
 ﻿using FastFistBlog.Server.Controllers.DTO;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using FastFistBlog.Server.Data.Models;
+using FastFistBlog.Data.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 

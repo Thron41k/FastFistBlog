@@ -1,7 +1,8 @@
-﻿using FastFistBlog.Server.Data.Models;
+﻿using FastFistBlog.Data.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace FastFistBlog.Server.Data;
+namespace FastFistBlog.Data;
 
 public static class DataSeeder
 {

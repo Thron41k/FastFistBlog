@@ -1,5 +1,5 @@
-using FastFistBlog.Server.Data;
-using FastFistBlog.Server.Data.Models;
+using FastFistBlog.Data;
+using FastFistBlog.Data.Models;
 using FastFistBlog.Server.Infrastructure.Filters;
 using FastFistBlog.Server.Services;
 using FastFistBlog.Server.Services.Interfaces;

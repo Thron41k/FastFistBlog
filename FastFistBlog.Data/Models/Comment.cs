@@ -1,19 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FastFistBlog.Server.Data.Models;
+namespace FastFistBlog.Data.Models;
 
-public class Article
+public class Comment
 {
     [Key]
     public int Id { get; set; }
-    [Required, StringLength(200)]
-    public string Title { get; set; } = string.Empty;
     [Required, StringLength(2000)]
     public string Content { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public int ArticleId { get; set; }
+    public Article? Article { get; set; }
     [Required, StringLength(32)]
     public string AuthorId { get; set; } = string.Empty;
     public ApplicationUser? Author { get; set; }
-    public ICollection<ArticleTag> ArticleTags { get; set; } = new List<ArticleTag>();
-    public ICollection<Comment> Comments { get; set; } = new List<Comment>();
 }
