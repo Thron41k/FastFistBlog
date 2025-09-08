@@ -5,7 +5,7 @@ VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastFistBlog.Server", "FastFistBlog.Server\FastFistBlog.Server.csproj", "{7E283A18-09EB-4A89-8E3F-7E6C4FF7E2CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastFistBlog.API", "API\FastFistBlog.API.csproj", "{D63E75EE-1A1D-4ABA-B442-A1020AE08745}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastFistBlog.API", "FastFistBlog.API\FastFistBlog.API.csproj", "{D63E75EE-1A1D-4ABA-B442-A1020AE08745}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastFistBlog.Data", "FastFistBlog.Data\FastFistBlog.Data.csproj", "{4DC623DA-DC95-4208-917F-4949E2122F5E}"
 EndProject
