@@ -1,7 +1,5 @@
-using FastFistBlog.Server.Models;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 using System.Security.Claims;
 
 namespace FastFistBlog.Server.Controllers.Api;
